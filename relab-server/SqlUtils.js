@@ -31,21 +31,8 @@ module.exports = class SqlUtils {
         if (err) console.log(err); // ... error checks
         res.send(coordConverter.generateGeoJson(result.recordset));  //Invio il risultato al Browser
     }
-    static ciVettRequest(res) {
-        let sqlRequest = new sql.Request();  //sqlRequest: oggetto che serve a eseguire le query
-        let q = `SELECT INDIRIZZO, WGS84_X, WGS84_Y, CLASSE_ENE, EP_H_ND, CI_VETTORE, FOGLIO, SEZ
-        FROM [Katmai].[dbo].[interventiMilano]
-        WHERE FOGLIO = 90`
-        //eseguo la query e aspetto il risultato nella callback
-       sqlRequest.query(q, (err, result) => {SqlUtils.sendCiVettResult(err,result,res)}); 
-    }
-
-    static sendCiVettResult(err,result, res)
-    {
-            if (err) console.log(err); // ... error checks
-            res.send(result.recordset);  //Invio il risultato al Browser
-    }
-     static ciVettRequest(req,res) {
+    
+    static ciVettRequest(req,res) {
         let sqlRequest = new sql.Request();  //sqlRequest: oggetto che serve a eseguire le query
         let foglio = req.params.foglio; //ottengo il foglio passato come parametro dall'url
         let q = `SELECT INDIRIZZO, WGS84_X, WGS84_Y, CLASSE_ENE, EP_H_ND, CI_VETTORE, FOGLIO, SEZ
@@ -53,5 +40,11 @@ module.exports = class SqlUtils {
         WHERE FOGLIO = ${foglio}`
         //eseguo la query e aspetto il risultato nella callback
         sqlRequest.query(q, (err, result) => {SqlUtils.sendCiVettResult(err,result,res)}); 
+    }
+    
+    static sendCiVettResult(err,result, res)
+    {
+            if (err) console.log(err); // ... error checks
+            res.send(result.recordset);  //Invio il risultato al Browser
     }
 }
