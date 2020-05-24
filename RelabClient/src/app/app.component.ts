@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
       lngTot += m.lng;
       this.markers.push(m);
     }
-    this.lng = lngTot/data.length; //Commenta qui
+    this.lng = lngTot/data.length; //fa la media della lat e lng
     this.lat = latTot/data.length;
     this.zoom = 16;
   }
@@ -100,9 +100,9 @@ export class AppComponent implements OnInit {
   }
     cambiaFoglio(foglio) : boolean
   {
-    let val = foglio.value; //Commenta qui
-    this.obsCiVett = this.http.get<Ci_vettore[]>(`https://3000-ba5ad04b-817a-4ee6-94b6-93c4d139e6ad.ws-eu01.gitpod.io/ci_vettore/${val}`);  //Commenta qui
-    this.obsCiVett.subscribe(this.prepareCiVettData); //Commenta qui
+    let val = foglio.value; //valore del foglio
+    this.obsCiVett = this.http.get<Ci_vettore[]>(`https://3000-ba5ad04b-817a-4ee6-94b6-93c4d139e6ad.ws-eu01.gitpod.io/ci_vettore/${val}`);  //richiesta get al server nella quale passo il mio url/ci_vettore/valore del foglio
+    this.obsCiVett.subscribe(this.prepareCiVettData); //si sottoscrive per passare lat e lng
     console.log(val);
     return false;
   }
